@@ -5,7 +5,7 @@ import authMiddleware from "../middleware/authMiddleware.js"
 const router = express.Router()
 
 
-router.post("/store",storeMusic)
+router.post("/store",authMiddleware,storeMusic)
 
 
 

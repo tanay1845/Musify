@@ -2,11 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Play, Pause, Music } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Profile() {
   const [user, setUser] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSong, setCurrentSong] = useState(null);
+  const [loading, setLoading] = useState(false);
   const audioRef = useRef(null);
 
   const navigate = useNavigate()
@@ -15,7 +17,7 @@ function Profile() {
     {
       title: "Night Drive",
       artist: "Lofi Beats",
-      src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      src: "",
     },
     {
       title: "Chill Vibes",
@@ -33,15 +35,17 @@ function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setLoading(true)
         const res = await axios.get("http://localhost:3000/api/v1/user/current-user", {
           withCredentials: true,
         });
         setUser(res.data.user);
+        setLoading(false)
       } catch (error) {
         console.error("Failed to fetch user:", error);
       }
     };
-
+    
     fetchUser();
   }, []);
 
@@ -79,6 +83,8 @@ function Profile() {
 
 
         <div className="bg-gradient-to-r from-[#4a1c1c] to-[#3a1f0f] p-6 rounded-2xl shadow-lg flex flex-col md:flex-row items-center justify-between ">
+          
+          
 
           {user ? (<>
             <div className="flex items-center gap-6">
@@ -94,10 +100,17 @@ function Profile() {
               onClick={handleLogout}
             >Logout</div>
           </>
-          ) : (
+          ) :  loading ? (
             <div className="">
               User not found please <Link to={"/login"} className="text-blue-400 underline">login</Link>
-            </div>)
+            </div> ) : ( 
+            <div className="flex items-center justify-center">
+            <div
+              className="animate-spin rounded-full border-4 border-gray-300 border-t-[#ff4b4b]"
+              style={{ width: 40, height: 40 }}
+            />
+          </div>  
+          )
           }
         </div>
 

@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.model.js";
 
+
 const authMiddleware = async(req, res, next) => {
   try {
 
@@ -18,6 +19,10 @@ const authMiddleware = async(req, res, next) => {
 
     const user = await User.findById(decoded?._id).select("-password")
     // console.log(user)
+
+    if(!user){
+      
+    }
 
     req.user = user
 

@@ -4,14 +4,22 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
-import PlayBar from './components/PlayBar.jsx'
+import { Toaster } from 'react-hot-toast'
+import { MusicProvider } from './context/MusicContext.jsx'
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <MusicProvider>
+
     <Router>
       <Navbar />
       <App />
-      {/* <PlayBar /> */}
     </Router>
+    <Toaster
+      position="bottom-right"
+      reverseOrder={false}
+      />
+      </MusicProvider>
   </StrictMode>,
 )

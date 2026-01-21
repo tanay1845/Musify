@@ -12,7 +12,7 @@ const Navbar = () => {
 
   const fetchCurrentUser = async() => {
     const res = await axios.get("http://localhost:3000/api/v1/user/current-user",{withCredentials:true})
-    console.log(res.data.user)
+    // console.log(res.data.user)
     setUser(res.data.user)
   }
 
@@ -20,7 +20,7 @@ const Navbar = () => {
     fetchCurrentUser()
   },[])
   return (
-    <nav className="w-full bg-gradient-to-r from-[#5a1a1a] via-[#6e2b2b] to-[#4b2a1a] shadow-md">
+    <nav className="w-full sticky top-0 z-10 bg-gradient-to-r from-[#5a1a1a] via-[#6e2b2b] to-[#4b2a1a] shadow-md">
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo Section */}
         <div className="flex items-center gap-2 cursor-pointer">
@@ -35,7 +35,9 @@ const Navbar = () => {
           <li className="text-white hover:text-[#ffb347] transition cursor-pointer"
           onClick={()=>navigate("/")}
           >Home</li>
-          <li className="text-white hover:text-[#ffb347] transition cursor-pointer">Library</li>
+          <li className="text-white hover:text-[#ffb347] transition cursor-pointer"
+            onClick={()=>navigate("/upload-music-files")}
+          >Upload</li>
           <li className="text-white hover:text-[#ffb347] transition cursor-pointer">Playlists</li>
           <li className="text-white hover:text-[#ffb347] transition cursor-pointer">Trending</li>
         </ul>

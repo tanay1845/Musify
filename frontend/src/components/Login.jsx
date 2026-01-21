@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -17,9 +18,11 @@ function Login() {
         { withCredentials: true }
       );
       // console.log("Login successful:", res.data);
+      toast.success("User logged in Successfully")
       navigate("/")
     } catch (error) {
       console.error("Login error:", error.response?.data || error);
+      toast.error(error.response?.data.message || "something error")
     }
   };
 

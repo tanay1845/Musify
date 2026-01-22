@@ -72,7 +72,6 @@ const HomePage = ({}) => {
       <footer className="border-t border-[#4a1f1f] py-6 text-center text-gray-500">
         © {new Date().getFullYear()} Music Player. All rights reserved.
       </footer>
-      <PlayBar />
     </div>
   );
 };

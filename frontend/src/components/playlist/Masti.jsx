@@ -15,7 +15,7 @@ function Masti() {
   const fetchPlayListSongs = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/v2/music/fetch-playlist",
+        "https://musify-liard-rho.vercel.app/api/v2/music/fetch-playlist",
         { playlist },
         { withCredentials: true }
       );

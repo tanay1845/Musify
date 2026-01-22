@@ -36,7 +36,7 @@ function Profile() {
     const fetchUser = async () => {
       try {
         setLoading(true)
-        const res = await axios.get("http://localhost:3000/api/v1/user/current-user", {
+        const res = await axios.get("https://musify-liard-rho.vercel.app/api/v1/user/current-user", {
           withCredentials: true,
         });
         setUser(res.data.user);
@@ -50,7 +50,7 @@ function Profile() {
   }, []);
 
   const handleLogout = async () => {
-    const res = await axios.get("http://localhost:3000/api/v1/user/logout", { withCredentials: true })
+    const res = await axios.get("https://musify-liard-rho.vercel.app/api/v1/user/logout", { withCredentials: true })
     console.log(res)
     navigate("/login")
   }

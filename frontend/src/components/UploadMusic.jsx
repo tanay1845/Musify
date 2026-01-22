@@ -23,7 +23,7 @@ export default function UploadMusic() {
 
       setLoading(true)
       const res = await axios.post(
-        "http://localhost:3000/api/v2/music/store",
+        "https://musify-liard-rho.vercel.app/api/v2/music/store",
         formData,
         {
           withCredentials: true,

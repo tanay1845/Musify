@@ -10,7 +10,7 @@ export const MusicProvider = ({ children }) => {
   useEffect(() => {
     const fetchMusic = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/v2/music/fetch");
+        const res = await axios.get("https://musify-liard-rho.vercel.app/api/v2/music/fetch");
         setAllSong(res.data.music);
       } catch (error) {
         console.error("Error fetching music", error);

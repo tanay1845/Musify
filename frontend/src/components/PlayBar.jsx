@@ -33,7 +33,7 @@ const PlayBar = () => {
 
   // If User then show playbar
   const fetchCurrentUser = async() => {
-    await axios.get("http://localhost:3000/api/v1/user/current-user",{withCredentials:true})
+    await axios.get("https://musify-liard-rho.vercel.app/api/v1/user/current-user",{withCredentials:true})
     setUser(true)
   }
 

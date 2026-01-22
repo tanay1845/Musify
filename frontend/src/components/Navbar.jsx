@@ -11,7 +11,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const fetchCurrentUser = async() => {
-    const res = await axios.get("http://localhost:3000/api/v1/user/current-user",{withCredentials:true})
+    const res = await axios.get("https://musify-liard-rho.vercel.app/api/v1/user/current-user",{withCredentials:true})
     // console.log(res.data.user)
     setUser(res.data.user)
   }

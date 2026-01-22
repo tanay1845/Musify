@@ -8,6 +8,16 @@ export const storeMusic = async (req, res) => {
   try {
     const { title, artistName, playList } = req.body;
 
+    const user = req.user.isAdmin
+    // console.log(user)
+    
+    if(user == 'false'){
+      return res.status(400).json({
+        message: "Only admin users can upload the music",
+        success: false,
+      });
+    }
+
     if (!title || !artistName) {
       return res.status(400).json({
         message: "All fields are required",

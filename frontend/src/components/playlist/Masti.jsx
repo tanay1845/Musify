@@ -31,12 +31,16 @@ function Masti() {
   }, [playlist]);
 
   const handleSongClick = (index) => {
-    setAllSong(music);           // 🔥 Replace global track list
-    setCurrentTrackIndex(index); // ▶ Play selected song
+    setAllSong(music);           
+    setCurrentTrackIndex(index); 
   };
 
   return (
     <div className="min-h-screen bg-slate-800">
+      <div>
+        <p className="text-white font-bold p-3 text-4xl">
+          {`${playlistName.charAt(0).toUpperCase()}${playlistName.slice(1).replace("-"," ")}`}</p>
+      </div>
       <div className="flex flex-wrap gap-6 p-5">
         {music.map((song, index) => (
           <SongCard

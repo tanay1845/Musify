@@ -41,13 +41,14 @@ export default function UploadMusic() {
       setLoading(false)
     } catch (error) {
       console.log(error)
+      toast.error(error.response?.data.message || "Music not uploaded")
       setLoading(false)
     }
   };
 
 
   return (
-    <div className="min-h-screen flex items-start justify-center bg-gray-100 pt-10">
+    <div className="min-h-screen flex items-start justify-center pt-10">
       <div className="w-full max-w-3xl bg-white rounded-xl shadow-lg p-6">
         <h2 className="text-2xl font-bold text-center text-[#982b1f] mb-6">
           Upload Music

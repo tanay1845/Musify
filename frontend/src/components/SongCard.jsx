@@ -2,7 +2,7 @@ export default function SongCard({ thumbnail, title, artist, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="w-60 h-50 bg-slate-800 text-white rounded-lg shadow-md hover:shadow-lg transition cursor-pointer"
+      className="w-60 h-50 bg-slate-800 text-white rounded-lg shadow-lg hover:shadow-2xl transition cursor-pointer hover:scale-105"
     >
       <div className="w-full h-35 overflow-hidden rounded-t-lg">
         <img

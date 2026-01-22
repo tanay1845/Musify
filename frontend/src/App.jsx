@@ -1,14 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import Home from './components/Home';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Profile from './components/Profile';
-import UploadMusic from './components/UploadMusic';
 import MusicView from './components/MusicPage';
 import PlayBar from './components/PlayBar';
 import Masti from './components/playlist/Masti';
 import "./App.css";
 import HomePage from "./components/Home";
+import UploadMusic from "./components/UploadMusic";
 
 function App() {
   return (

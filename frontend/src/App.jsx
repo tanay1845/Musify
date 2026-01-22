@@ -8,12 +8,13 @@ import MusicView from './components/MusicPage';
 import PlayBar from './components/PlayBar';
 import Masti from './components/playlist/Masti';
 import "./App.css";
+import HomePage from "./components/Home";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/user-profile" element={<Profile />} />

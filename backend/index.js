@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors"
 import userRouter from "./routes/User.route.js"
 import musicRouter from "./routes/Music.route.js"
+import playlistRouter from "./routes/Playlist.route.js"
 
 dotenv.config({})
 
@@ -17,13 +18,15 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin:"https://musifyf.vercel.app",
+    origin:"http://localhost:5173",
     credentials:true
 }))
 
 app.use("/api/v1/user",userRouter);
 
 app.use("/api/v2/music",musicRouter)
+
+app.use("/api/v1/playlist",playlistRouter)
 
 app.listen(PORT, () => {
     console.log(`App running at Port Number ${PORT}`)

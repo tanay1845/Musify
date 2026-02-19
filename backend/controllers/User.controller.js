@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import  {User}  from "../models/User.model.js"
+import { User } from "../models/User.model.js"
 import dotenv from "dotenv"
 
 dotenv.config({})
@@ -34,14 +34,19 @@ export const loginUser = async (req, res) => {
 
     const Token = await user.generateAccessToken();
 
-    return res.status(200).cookie("Token",Token).json({
-        message: "Logged in successfully",
-        success: true,
-        user: {
-          _id: user._id,
-          email: user.email,
-        },
-      });
+    return res.status(200).cookie("Token", Token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 5 * 24 * 60 * 60 * 1000, 
+      sameSite: "lax"
+    }).json({
+      message: "Logged in successfully",
+      success: true,
+      user: {
+        _id: user._id,
+        email: user.email,
+      },
+    });
 
   } catch (error) {
     return res.status(500).json({
@@ -81,27 +86,27 @@ export const signupUser = async (req, res) => {
       password: hashedPassword,
     });
 
-   
+
     return res.status(200).json({
-        message: "User registered successfully",
-        success: true,
-        user: {
-          _id: newUser._id,
-          username: newUser.username,
-          email: newUser.email,
-        },
-      });
+      message: "User registered successfully",
+      success: true,
+      user: {
+        _id: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+      },
+    });
 
   } catch (error) {
     console.error("Signup error:", error);
     return res.status(500).json({
       message: "Internal server error while signing up user",
       success: false,
-     });
-    }
+    });
+  }
 };
 
-export const fetchCurrentUser = async(req,res) => {
+export const fetchCurrentUser = async (req, res) => {
   try {
     const user = req.user;
     // console.log(user)
@@ -122,24 +127,24 @@ export const fetchCurrentUser = async(req,res) => {
       message: "Internal server error while fetching Current user",
       success: false,
       error
-     });
+    });
   }
 }
 
-export const logoutUser = async(req, res) => {
+export const logoutUser = async (req, res) => {
   try {
-    return res.clearCookie("Token",{
-    httpOnly: true,
-    sameSite: "strict",
-    secure: "production",
-  }).status(200).json({
-      message:"user logged out successfully"
+    return res.clearCookie("Token", {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: "production",
+    }).status(200).json({
+      message: "user logged out successfully"
     })
   } catch (error) {
     return res.status(500).json({
       message: "Internal server error during the logout user",
       success: false,
       error
-     });
+    });
   }
 }

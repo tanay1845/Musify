@@ -1,4 +1,5 @@
 import { Music } from "../models/Music.model.js";
+import { MyPlayList } from "../models/MyPlayList.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const DEFAULT_THUMBNAIL =
@@ -132,6 +133,66 @@ export const fetchPlaylist = async(req,res) => {
     return res.status(500).json({
       success: false,
       message: "Internal server error while fetching music files in playlist",
+      error: error.message,
+    });
+  }
+}
+
+export const fetchCurrentSong = async(req,res) => {
+  try {
+    const {id} = req.body
+    if(!id){
+      return res.status(404).json({
+        success: false,
+        message:"id is not found"
+      });
+    }
+
+    const currMusic = await Music.findById(id)
+
+    return res.status(200).json({
+        success: true,
+        message:"current song fetched",
+        currMusic
+      });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error while fetching current music file",
+      error: error.message,
+    });
+  }
+}
+
+export const fetchSongFromMyPlayList = async(req,res) => {
+  try {
+    const {id} = req.body
+    
+    if (!id) {
+      return res.status(404).json({
+        message:"Id is not found",
+        success:false
+      })
+    }
+
+    const myplaylist = await MyPlayList.findById(id).populate("songs")
+    if(!myplaylist){
+      return res.status(404).json({
+        message:"Song is not found",
+        success:false
+      })
+    }
+
+    return res.status(200).json({
+      message:"Song fetched successfully",
+      success:true,
+      myplaylist
+    })
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error while fetching song from my playlist",
       error: error.message,
     });
   }

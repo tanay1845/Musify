@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import PlayBar from "./PlayBar";
+import PlayBar from "../components/PlayBar";
 import { useState } from "react";
 
 const HomePage = ({}) => {
@@ -50,7 +50,7 @@ const HomePage = ({}) => {
             "Sad Songs",
             "Masti Hits",
             "Old Classics",
-            "Energetic Feel"
+            "Energetic Feel",
           ].map((playlist, index) => (
             <div
               key={index}

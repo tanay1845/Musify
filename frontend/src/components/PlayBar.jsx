@@ -12,7 +12,7 @@ const formatTime = (seconds) => {
 };
 
 const PlayBar = () => {
-  const { allSong: tracks, currentTrackIndex, setCurrentTrackIndex } = useMusic();
+  const { allSong: tracks, currentTrackIndex, setCurrentTrackIndex , setCurrentSong } = useMusic();
 
   const [user, setUser] = useState(false);
 
@@ -33,7 +33,7 @@ const PlayBar = () => {
 
   // If User then show playbar
   const fetchCurrentUser = async() => {
-    await axios.get("https://musify-liard-rho.vercel.app/api/v1/user/current-user",{withCredentials:true})
+    await axios.get("http://localhost:3000/api/v1/user/current-user",{withCredentials:true})
     setUser(true)
   }
 
@@ -51,6 +51,8 @@ const PlayBar = () => {
     audio.src = currentTrack.url;
     audio.load();
 
+    // console.log("pb",currentTrack)
+    setCurrentSong(currentTrack)
     audio
       .play()
       .then(() => setIsPlaying(true))
@@ -115,11 +117,11 @@ const PlayBar = () => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="bg-[#1a1a1a] text-white p-4 flex flex-col md:flex-row items-center justify-around shadow-xl w-[95vw] fixed bottom-4 z-50">
+      <div className="bg-[#1a1a1a] text-white p-4 flex flex-col md:flex-row items-center justify-around shadow-xl w-[95vw] fixed md:top-[83%] top-[75%] z-50">
 
         {/* Track Info */}
         <div className="flex-1 min-w-[150px]">
-          <h3 className="text-lg font-semibold text-[#ff4b4b] truncate max-w-[200px]">
+          <h3 className="text-lg font-semibold text-[#ff4b4b] truncate max-w-[300px]">
             {currentTrack.title}
           </h3>
           <p className="text-sm text-gray-400 truncate max-w-[200px]">
@@ -130,24 +132,24 @@ const PlayBar = () => {
         {/* Controls */}
         <div className="flex-1 md:min-w-[400px] max-w-2xl w-full">
           <div className="flex items-center justify-center gap-6 mb-3">
-            <button onClick={handlePrev}>
+            <button onClick={handlePrev} className="cursor-pointer">
               <SkipBack size={24} />
             </button>
 
             <button
               onClick={togglePlayPause}
-              className="bg-[#8b0000] p-3 rounded-full"
+              className="bg-[#8b0000] p-3 rounded-full cursor-pointer"
             >
               {isPlaying ? <Pause size={28} /> : <Play size={28} />}
             </button>
 
-            <button onClick={handleNext}>
+            <button onClick={handleNext} className="cursor-pointer">
               <SkipForward size={24} />
             </button>
           </div>
 
           {/* Progress */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 cursor-pointer">
             <span className="text-xs w-10 text-right">
               {formatTime(currentTime)}
             </span>
@@ -170,7 +172,7 @@ const PlayBar = () => {
         </div>
 
         {/* Volume */}
-        <div className="flex items-center gap-3 flex-1 justify-end min-w-[150px]">
+        <div className="flex items-center gap-3 flex-1 justify-end min-w-[150px] cursor-pointer sm:fix">
           <Volume2 size={18} />
           <input
             type="range"

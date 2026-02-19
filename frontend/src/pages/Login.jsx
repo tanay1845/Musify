@@ -9,11 +9,12 @@ function Login() {
 
   const navigate = useNavigate()
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://musify-liard-rho.vercel.app/api/v1/user/login",
+        "http://localhost:3000/api/v1/user/login",
         { email, password },
         { withCredentials: true }
       );

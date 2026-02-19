@@ -15,7 +15,7 @@ function Masti() {
   const fetchPlayListSongs = async () => {
     try {
       const res = await axios.post(
-        "https://musify-liard-rho.vercel.app/api/v2/music/fetch-playlist",
+        "http://localhost:3000/api/v2/music/fetch-playlist",
         { playlist },
         { withCredentials: true }
       );
@@ -41,7 +41,7 @@ function Masti() {
         <p className="text-white font-bold p-3 text-4xl">
           {`${playlistName.charAt(0).toUpperCase()}${playlistName.slice(1).replace("-"," ")}`}</p>
       </div>
-      <div className="flex flex-wrap gap-6 p-5">
+      <div className="flex flex-wrap gap-6 p-5 pb-48">
         {music.map((song, index) => (
           <SongCard
             key={song._id}

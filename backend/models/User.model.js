@@ -23,15 +23,6 @@ const userSchema = new mongoose.Schema({
 }
 ,{timestamps:true})
 
-// userSchema.pre("save",async function (next) {
-//     if(!this.isModified("password")) return next();
-//     this.password = await bcrypt.hash(this.password, 10);
-//     next()
-// })
-
-// userSchema.method.isPasswordCorrect = async function (enteredPassword) {
-//     return await bcrypt.compare(enteredPassword, this.password)
-// }
 
 userSchema.methods.generateAccessToken = async function() {
     try {
@@ -43,7 +34,7 @@ userSchema.methods.generateAccessToken = async function() {
         process.env.JWT_SECRET_KEY,
         {
             algorithm:"HS256",
-            expiresIn:process.env.EXPIRES_IN
+            expiresIn:process.env.EXPIRES_IN || 24*60*60*5
         })
         return token
     } catch (error) {

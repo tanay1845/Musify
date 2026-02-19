@@ -6,11 +6,12 @@ const MusicContext = createContext();
 export const MusicProvider = ({ children }) => {
   const [allSong, setAllSong] = useState([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [currentSong, setCurrentSong] = useState()
 
   useEffect(() => {
     const fetchMusic = async () => {
       try {
-        const res = await axios.get("https://musify-liard-rho.vercel.app/api/v2/music/fetch");
+        const res = await axios.get("http://localhost:3000/api/v2/music/fetch");
         setAllSong(res.data.music);
       } catch (error) {
         console.error("Error fetching music", error);
@@ -21,9 +22,12 @@ export const MusicProvider = ({ children }) => {
   }, []);
 
 
+
   return (
     <MusicContext.Provider
       value={{
+        currentSong,
+        setCurrentSong,
         allSong,
         setAllSong,
         currentTrackIndex,

@@ -36,7 +36,7 @@ function Profile() {
     const fetchUser = async () => {
       try {
         setLoading(true)
-        const res = await axios.get("https://musify-liard-rho.vercel.app/api/v1/user/current-user", {
+        const res = await axios.get("http://localhost:3000/api/v1/user/current-user", {
           withCredentials: true,
         });
         setUser(res.data.user);
@@ -50,7 +50,7 @@ function Profile() {
   }, []);
 
   const handleLogout = async () => {
-    const res = await axios.get("https://musify-liard-rho.vercel.app/api/v1/user/logout", { withCredentials: true })
+    const res = await axios.get("http://localhost:3000/api/v1/user/logout", { withCredentials: true })
     console.log(res)
     navigate("/login")
   }
@@ -88,11 +88,11 @@ function Profile() {
 
           {user ? (<>
             <div className="flex items-center gap-6">
-              <div className="w-28 h-28 bg-gray-800 rounded-full flex items-center justify-center text-4xl font-bold">
+              <div className="md:w-28 md:h-28 w-18 h-18 bg-gray-800 rounded-full flex items-center justify-center text-4xl font-bold">
                 {user ? user.username[0].toUpperCase() : "?"}
               </div>
               <div>
-                <h2 className="text-3xl font-bold">{user?.username || "Loading..."}</h2>
+                <h2 className="text-2xl md:text-3xl font-bold">{user?.username || "Loading..."}</h2>
                 <p className="text-gray-300">{user?.email}</p>
               </div>
             </div>

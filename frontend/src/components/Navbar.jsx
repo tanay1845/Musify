@@ -1,69 +1,83 @@
-import React, { useEffect } from "react";
-import { Music, Search, User } from "lucide-react"; // for icons
+import React, { useEffect, useState } from "react";
+import { Search, User, Menu } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const Navbar = () => {
-
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState(null);
+  const [show, setShow] = useState(false);
+  const [admin, setAdmin] = useState(false)
 
   const navigate = useNavigate();
 
-  const fetchCurrentUser = async() => {
-    const res = await axios.get("https://musify-liard-rho.vercel.app/api/v1/user/current-user",{withCredentials:true})
-    // console.log(res.data.user)
-    setUser(res.data.user)
-  }
+  const fetchCurrentUser = async () => {
+    const res = await axios.get(
+      "http://localhost:3000/api/v1/user/current-user",
+      { withCredentials: true }
+    );
+    setUser(res.data.user);
+    setAdmin(res.data.user.isAdmin)
+  };
+
+
 
   useEffect(() => {
-    fetchCurrentUser()
-  },[])
+    fetchCurrentUser();
+  }, [setAdmin,setUser]);
+
   return (
-    <nav className="w-full sticky top-0 z-10 bg-gradient-to-r from-[#5a1a1a] via-[#6e2b2b] to-[#4b2a1a] shadow-md">
-      <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-        {/* Logo Section */}
-        <div className="flex items-center gap-2 cursor-pointer">
-          {/* <Music className="text-white" size={26} /> */}
-          <img src="./public/logo2.png" alt="musify" 
-          className="w-14"/>
-          <h1 className="text-white text-xl font-bold tracking-wide">
+    <nav className="w-full sticky top-0 z-50 bg-gradient-to-r from-[#5a1a1a] via-[#6e2b2b] to-[#4b2a1a]">
+      {/* REMOVE max-w ON MOBILE */}
+      <div className="w-full md:max-w-7xl md:mx-auto px-4 py-3 flex items-center justify-between">
+
+        {/* Logo */}
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          <img src="/logo2.png" alt="musify" className="w-12" />
+          <h1 className="text-white text-xl font-bold">
             Musi<span className="text-[#ffb347]">Fy</span>
           </h1>
         </div>
 
-        {/* Nav Links */}
-        <ul className="hidden md:flex items-center gap-6">
-          <li className="text-white hover:text-[#ffb347] transition cursor-pointer"
-          onClick={()=>navigate("/")}
-          >Home</li>
-          <li className="text-white hover:text-[#ffb347] transition cursor-pointer"
-            onClick={()=>navigate("/upload-music-files")}
-          >Upload</li>
-          <li className="text-white hover:text-[#ffb347] transition cursor-pointer">Playlists</li>
-          <li className="text-white hover:text-[#ffb347] transition cursor-pointer">Trending</li>
+        {/* Desktop Nav */}
+        <ul className="hidden md:flex items-center gap-6 text-white">
+          <li onClick={() => navigate("/")} className="hover:text-[#ffb347] cursor-pointer">Home</li>
+          {
+           (admin=="true") ? (<li onClick={() => navigate("/upload-music-files")} className="hover:text-[#ffb347] cursor-pointer">Upload</li>):("")
+          }
+          <li onClick={() => navigate("/playlist")} className="hover:text-[#ffb347] cursor-pointer">Playlists</li>
+          <li onClick={() => navigate("/my-playlist")} className="hover:text-[#ffb347] cursor-pointer">My Playlist</li>
         </ul>
 
-        {/* Right Section */}
-
+        {/* Right */}
         <div className="flex items-center gap-4">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search songs..."
-              className="bg-[#2a2a2a] text-white rounded-full pl-10 pr-4 py-1 focus:outline-none focus:ring-2 focus:ring-[#ffb347] text-sm"
-              />
-            <Search
-              size={18}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-              />
-          </div>
-          <User className="text-white cursor-pointer hover:text-[#ffb347]" 
-          size={24}
-          onClick={()=>navigate("/user-profile")} />
-        </div>
 
-      </div>
+          {/* Mobile menu */}
+          <Menu
+            className="text-white md:hidden cursor-pointer"
+            size={26}
+            onClick={() => setShow(!show)}
+          />
+
+          <User
+            className="text-white cursor-pointer hover:text-[#ffb347]"
+            size={24}
+            onClick={() => navigate("/user-profile")}
+          />
+        </div>
+      </div> 
+
+      {/* Mobile Dropdown */}
+      {show && (
+        <div className="md:hidden bg-slate-800 text-white px-4 py-3 flex flex-col gap-3 items-center shadow-2xl">
+          <div onClick={() => navigate("/")} className="cursor-pointer">Home</div>
+          <div onClick={() => navigate("/upload-music-files")} className="cursor-pointer">Upload</div>
+          <div onClick={() => navigate("/playlist")} className="cursor-pointer">Playlists</div>
+          <div className="cursor-pointer">Trending</div>
+        </div>
+      )}
     </nav>
   );
 };

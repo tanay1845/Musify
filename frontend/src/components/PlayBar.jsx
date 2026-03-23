@@ -116,93 +116,93 @@ const PlayBar = () => {
   if (!currentTrack) return null;
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="bg-[#1a1a1a] text-white p-4 flex flex-col md:flex-row items-center justify-around shadow-xl w-[95vw] fixed md:top-[83%] top-[75%] z-50">
+    <div className="flex justify-center items-center ">
+  <div className="bg-slate-900/95 backdrop-blur-xl text-white p-3 flex flex-col md:flex-row items-center justify-around shadow-xl w-[95vw] fixed md:top-[83%] top-[75%] z-50 border border-indigo-500/20">
 
-        {/* Track Info */}
-        <div className="flex-1 min-w-[150px]">
-          <h3 className="text-lg font-semibold text-[#ff4b4b] truncate max-w-[300px]">
-            {currentTrack.title}
-          </h3>
-          <p className="text-sm text-gray-400 truncate max-w-[200px]">
-            {currentTrack.artistName || "Unknown Artist"}
-          </p>
-        </div>
+    {/* Track Info */}
+    <div className="flex-1 min-w-[150px]">
+      <h3 className="text-lg font-semibold text-indigo-400 truncate max-w-[300px]">
+        {currentTrack.title}
+      </h3>
+      <p className="text-sm text-indigo-300/60 truncate max-w-[200px]">
+        {currentTrack.artistName || "Unknown Artist"}
+      </p>
+    </div>
 
-        {/* Controls */}
-        <div className="flex-1 md:min-w-[400px] max-w-2xl w-full">
-          <div className="flex items-center justify-center gap-6 mb-3">
-            <button onClick={handlePrev} className="cursor-pointer">
-              <SkipBack size={24} />
-            </button>
+    {/* Controls */}
+    <div className="flex-1 md:min-w-[400px] max-w-2xl w-full">
+      <div className="flex items-center justify-center gap-6 mb-3">
+        <button onClick={handlePrev} className="cursor-pointer text-indigo-300/60 hover:text-indigo-400 transition-colors">
+          <SkipBack size={24} />
+        </button>
 
-            <button
-              onClick={togglePlayPause}
-              className="bg-[#8b0000] p-3 rounded-full cursor-pointer"
-            >
-              {isPlaying ? <Pause size={28} /> : <Play size={28} />}
-            </button>
+        <button
+          onClick={togglePlayPause}
+          className="bg-gradient-to-r from-indigo-600 to-purple-600 p-3 rounded-full cursor-pointer hover:from-indigo-500 hover:to-purple-500 transition-all shadow-lg shadow-indigo-600/30"
+        >
+          {isPlaying ? <Pause size={28} /> : <Play size={28} />}
+        </button>
 
-            <button onClick={handleNext} className="cursor-pointer">
-              <SkipForward size={24} />
-            </button>
-          </div>
+        <button onClick={handleNext} className="cursor-pointer text-indigo-300/60 hover:text-indigo-400 transition-colors">
+          <SkipForward size={24} />
+        </button>
+      </div>
 
-          {/* Progress */}
-          <div className="flex items-center gap-3 cursor-pointer">
-            <span className="text-xs w-10 text-right">
-              {formatTime(currentTime)}
-            </span>
+      {/* Progress */}
+      <div className="flex items-center gap-3 cursor-pointer">
+        <span className="text-xs w-10 text-right text-indigo-300/60">
+          {formatTime(currentTime)}
+        </span>
 
-            <div
-              ref={progressBarRef}
-              className="flex-1 bg-gray-700 h-1.5 rounded-full cursor-pointer"
-              onClick={handleProgressClick}
-            >
-              <div
-                className="bg-[#ff4b4b] h-full rounded-full"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-
-            <span className="text-xs w-10">
-              {formatTime(duration)}
-            </span>
-          </div>
-        </div>
-
-        {/* Volume */}
-        <div className="flex items-center gap-3 flex-1 justify-end min-w-[150px] cursor-pointer sm:fix">
-          <Volume2 size={18} />
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={volume}
-            onChange={(e) => {
-              const v = Number(e.target.value);
-              setVolume(v);
-              audioRef.current.volume = v;
-            }}
-            className="w-24 accent-[#ff4b4b]"
+        <div
+          ref={progressBarRef}
+          className="flex-1 bg-indigo-900/30 h-1.5 rounded-full cursor-pointer"
+          onClick={handleProgressClick}
+        >
+          <div
+            className="bg-gradient-to-r from-indigo-400 to-purple-400 h-full rounded-full"
+            style={{ width: `${progress}%` }}
           />
         </div>
 
-        {/* Audio */}
-        {user &&
-        <audio
-          ref={audioRef}
-          preload="metadata"
-          onTimeUpdate={updateProgress}
-          onLoadedMetadata={(e) => setDuration(e.target.duration)}
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-          onEnded={handleNext}
-        />
-}
+        <span className="text-xs w-10 text-indigo-300/60">
+          {formatTime(duration)}
+        </span>
       </div>
     </div>
+
+    {/* Volume */}
+    <div className="flex items-center gap-3 flex-1 justify-end min-w-[150px] cursor-pointer sm:fix text-indigo-300/60">
+      <Volume2 size={18} className="hover:text-indigo-400 transition-colors" />
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={volume}
+        onChange={(e) => {
+          const v = Number(e.target.value);
+          setVolume(v);
+          audioRef.current.volume = v;
+        }}
+        className="w-24 accent-indigo-500 bg-indigo-900/30 rounded-lg"
+      />
+    </div>
+
+    {/* Audio */}
+    {user &&
+    <audio
+      ref={audioRef}
+      preload="metadata"
+      onTimeUpdate={updateProgress}
+      onLoadedMetadata={(e) => setDuration(e.target.duration)}
+      onPlay={() => setIsPlaying(true)}
+      onPause={() => setIsPlaying(false)}
+      onEnded={handleNext}
+    />
+    }
+  </div>
+</div>
   );
 };
 

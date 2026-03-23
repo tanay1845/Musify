@@ -33,8 +33,8 @@ function AddPlaylist() {
     }
   }
   return (
-    <div className='flex justify-center w-full'>
-      <div className='w-full max-w-150 shadow-2xl p-8 rounded-2xl mt-6'>
+    <div className='w-full'>
+      <div className=''>
         <form onSubmit={onSubmitHandler} className="space-y-4">
           {/* Title */}
           <div>
@@ -60,7 +60,7 @@ function AddPlaylist() {
             className={`w-full flex items-center justify-center gap-2 font-semibold py-2 rounded-lg transition duration-200
     ${loading
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-[#982b1f] hover:bg-[#7a2118] cursor-pointer"
+                : "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:shadow-xl hover:shadow-indigo-600/30"
               } text-white`}
           >
             {loading ? (
@@ -85,11 +85,11 @@ function AddPlaylist() {
                     d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                   />
                 </svg>
-                Saving...
+                Creating...
               </>
 
             ) : (
-              "Save"
+              "Create"
             )}
           </button>
 

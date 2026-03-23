@@ -17,7 +17,7 @@ const musicSchema = new mongoose.Schema({
     },
     thumbnail:{
         type:String
-    }
+    },
 },{timestamps:true})
 
 export const Music = mongoose.model("Music",musicSchema)

@@ -11,8 +11,8 @@ export const storeMusic = async (req, res) => {
 
     const user = req.user.isAdmin
     // console.log(user)
-    
-    if(user == 'false'){
+
+    if (user == 'false') {
       return res.status(400).json({
         message: "Only admin users can upload the music",
         success: false,
@@ -46,7 +46,7 @@ export const storeMusic = async (req, res) => {
     }
 
     // Upload audio (required)
-    const audio = await uploadOnCloudinary(audioLocalPath, "video" , "audio");
+    const audio = await uploadOnCloudinary(audioLocalPath, "video", "audio");
     if (!audio) {
       return res.status(400).json({
         message: "Audio upload failed",
@@ -58,7 +58,7 @@ export const storeMusic = async (req, res) => {
     let thumbnailUrl = DEFAULT_THUMBNAIL;
 
     if (thumbnailLocalPath) {
-      const thumbnail = await uploadOnCloudinary(thumbnailLocalPath, "image" ,"images");
+      const thumbnail = await uploadOnCloudinary(thumbnailLocalPath, "image", "images");
       if (thumbnail) {
         thumbnailUrl = thumbnail.secure_url;
       }
@@ -111,24 +111,24 @@ export const fetchMusic = async (req, res) => {
 };
 
 
-export const fetchPlaylist = async(req,res) => {
+export const fetchPlaylist = async (req, res) => {
   try {
-    const {playlist} = req.body
+    const { playlist } = req.body
 
-    const music = await Music.find({playList: playlist})
-    if(!music){
+    const music = await Music.find({ playList: playlist })
+    if (!music) {
       return res.status(400).json({
         success: false,
-        message:"playlist not found"
+        message: "playlist not found"
       });
     }
-   
+
     return res.status(200).json({
       success: true,
-      message:"playlist fetched successfully",
+      message: "playlist fetched successfully",
       music
     });
-    
+
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -138,23 +138,23 @@ export const fetchPlaylist = async(req,res) => {
   }
 }
 
-export const fetchCurrentSong = async(req,res) => {
+export const fetchCurrentSong = async (req, res) => {
   try {
-    const {id} = req.body
-    if(!id){
+    const { id } = req.body
+    if (!id) {
       return res.status(404).json({
         success: false,
-        message:"id is not found"
+        message: "id is not found"
       });
     }
 
     const currMusic = await Music.findById(id)
 
     return res.status(200).json({
-        success: true,
-        message:"current song fetched",
-        currMusic
-      });
+      success: true,
+      message: "current song fetched",
+      currMusic
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -164,28 +164,28 @@ export const fetchCurrentSong = async(req,res) => {
   }
 }
 
-export const fetchSongFromMyPlayList = async(req,res) => {
+export const fetchSongFromMyPlayList = async (req, res) => {
   try {
-    const {id} = req.body
-    
+    const { id } = req.body
+
     if (!id) {
       return res.status(404).json({
-        message:"Id is not found",
-        success:false
+        message: "Id is not found",
+        success: false
       })
     }
 
     const myplaylist = await MyPlayList.findById(id).populate("songs")
-    if(!myplaylist){
+    if (!myplaylist) {
       return res.status(404).json({
-        message:"Song is not found",
-        success:false
+        message: "Song is not found",
+        success: false
       })
     }
 
     return res.status(200).json({
-      message:"Song fetched successfully",
-      success:true,
+      message: "Song fetched successfully",
+      success: true,
       myplaylist
     })
 
@@ -197,3 +197,9 @@ export const fetchSongFromMyPlayList = async(req,res) => {
     });
   }
 }
+
+
+
+
+
+

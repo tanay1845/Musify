@@ -6,6 +6,7 @@ import cors from "cors"
 import userRouter from "./routes/User.route.js"
 import musicRouter from "./routes/Music.route.js"
 import playlistRouter from "./routes/Playlist.route.js"
+import artistRouter from "./routes/Artist.route.js"
 
 dotenv.config({})
 
@@ -27,6 +28,8 @@ app.use("/api/v1/user",userRouter);
 app.use("/api/v2/music",musicRouter)
 
 app.use("/api/v1/playlist",playlistRouter)
+
+app.use("/api/v1/artist", artistRouter)
 
 app.listen(PORT, () => {
     console.log(`App running at Port Number ${PORT}`)

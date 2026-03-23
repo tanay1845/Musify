@@ -17,7 +17,7 @@ export const MusicProvider = ({ children }) => {
         console.error("Error fetching music", error);
       }
     };
-
+    
     fetchMusic();
   }, []);
 

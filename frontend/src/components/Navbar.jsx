@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const [show, setShow] = useState(false);
-  const [admin, setAdmin] = useState(false)
+  const [admin, setAdmin] = useState(false);
 
   const navigate = useNavigate();
 

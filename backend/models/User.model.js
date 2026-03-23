@@ -19,7 +19,13 @@ const userSchema = new mongoose.Schema({
     isAdmin:{
         type:String,
         default:false
-    }
+    },
+    likes:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"Music"
+        }
+    ]
 }
 ,{timestamps:true})
 

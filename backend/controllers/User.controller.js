@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { User } from "../models/User.model.js"
 import dotenv from "dotenv"
+import { Music } from "../models/Music.model.js";
 
 dotenv.config({})
 
@@ -145,6 +146,92 @@ export const logoutUser = async (req, res) => {
       message: "Internal server error during the logout user",
       success: false,
       error
+    });
+  }
+}
+
+
+export const addLikeToSong = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { songId } = req.body;
+
+    if (!songId) {
+      return res.status(400).json({
+        success: false,
+        message: "Song ID is required",
+      });
+    }
+
+    const user = await User.findById(userId)
+    if(!user){
+      return res.status(401).json({
+        success: false,
+        message: "User not authorized",
+      });
+    }
+    const song = await Music.findById(songId);
+
+    if (!song) {
+      return res.status(404).json({
+        success: false,
+        message: "Song not found",
+      });
+    }
+
+    // Check if already liked
+    const alreadyLiked = user.likes.some((id) => id.toString() === songId);
+
+    if (alreadyLiked) {
+      //  UNLIKE
+      await User.findByIdAndUpdate(userId, {
+        $pull: { likes: songId },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Song unliked",
+        liked: false,
+      });
+    } else {
+      //  LIKE
+      await User.findByIdAndUpdate(userId, {
+        $addToSet: { likes: songId }, // prevents duplicates
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Song liked",
+        liked: true,
+      });
+    }
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error while adding like",
+      error: error.message,
+    });
+  }
+};
+
+
+export const fetchLikedSong = async(req,res) => {
+  try {
+    const userId = req.user._id
+
+    const user = await User.findById(userId)
+
+
+    return res.status(200).json({
+      message:"success",
+      user
+    })
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error while fetching liked song",
+      error: error.message,
     });
   }
 }

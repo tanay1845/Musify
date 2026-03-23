@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
       <MusicProvider>
         <Router>
-          <Navbar />
+          {/* <Navbar /> */}
           <App />
         </Router>
         <Toaster
